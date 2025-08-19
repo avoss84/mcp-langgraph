@@ -13,8 +13,6 @@ This project provides a basic code example how to use *LangGraph* as agentic orc
 ## Package structure
 
 ```
-├── .github
-│   └── workflows
 ├── CHANGELOG.md
 ├── data
 ├── docker-compose.yml
@@ -33,7 +31,6 @@ This project provides a basic code example how to use *LangGraph* as agentic orc
 │   └── notebooks
 ├── chat_ui.py
 ├── app_mcp_client.py
-├── terraform
 ├── tests
 ```
 
