@@ -1,0 +1,151 @@
+[build-system]
+requires = [
+    "setuptools>=61.0",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-playground"
+version = "0.1.0"
+description = "Basic data science project template"
+readme = "README.md"
+requires-python = "==3.13.*"
+dependencies = [
+    "uvicorn",
+    "fastapi[standard]",
+    "PyYAML",
+    "toml",
+    "python-dotenv",
+    "langchain>=0.3.27",
+    "langchain-google-vertexai>=2.0.28",
+    "google-cloud-logging>=3.12.1",
+    "langgraph>=0.6.5",
+    "mcp>=1.13.0",
+    "fastmcp>=2.11.3",
+    "langchain-mcp-adapters>=0.1.9",
+    "pandas>=2.3.1",
+    "streamlit>=1.48.1",
+    "watchdog>=6.0.0",
+]
+
+keywords = ["Data Science", "Project template"]
+
+authors = [
+    { name = "Alexander Vosseler", email = "avosseler@nemetschek.com" }
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["mcp_sandbox*"]
+
+
+[tool.setuptools.package-data]
+agbe_cc = ["*.yaml", "*.yml", "**/*.yaml", "**/*.yml"]
+
+
+[dependency-groups]
+dev = [
+    {include-group = "format"},
+    "jupyter",
+    "ipykernel==6.*",
+]
+format = [
+    "mypy>=1.15.0",
+    "black>=25.1.0",
+]
+test = [
+    "types-pyyaml",
+    "types-toml",
+    # "types-requests",
+    # "bandit",
+    # "flake8",
+    # "flake8-pyproject",
+    "isort",
+    "pytest",
+    "pytest-asyncio",
+    "pytest-mock",
+    "pytest-timeout",
+]
+
+
+[tool.mypy]
+python_version = "3.13"
+ignore_missing_imports = true
+check_untyped_defs = true
+warn_return_any = true
+warn_unreachable = true
+warn_redundant_casts = true
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+addopts = "-ra"
+pythonpath = ["src"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".hg",
+  ".ipynb_checkpoints",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pyenv",
+  ".pytest_cache",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  ".vscode",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "site-packages",
+  "venv",
+  "terraform",
+  "Docker",
+]
+
+[tool.ruff.lint]
+ignore = [
+  "E203",  # whitespace before ':', (Black compatibility)
+  "E266",  # too many '#' block (optional)
+  "E501",  # line too long TODO: format long strings by hand
+  "S101",  # Use of assert detected.
+  "S104",  # Possible binding to all interfaces
+  "S311",  # Standard pseudo-random generators are not suitable for cryptographic purposes
+  "PT018", # Assertion should be broken down into multiple parts
+]
+select = [
+  "FAST",  # FastAPI
+  "ASYNC", # python async
+  "S",     # bandit
+  "B",     # bugbear
+  "Q",     # quotes
+  "PT",    # pytest
+  "I",     # isort
+  "E",     # code style (error)
+  "W",     # code style (warning)
+  "F",     # pyflakes
+]
+
+[tool.ruff.format]
+quote-style = "double"  # double quote usage
+indent-style = "space"  # space based indent
+line-ending = "auto"    # automatic new line recognition

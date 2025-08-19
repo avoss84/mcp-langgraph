@@ -1,0 +1,16 @@
+FROM python:3.13-slim
+
+# No need to expose port for MCP server (uses stdio)
+WORKDIR /app
+RUN pip install --no-cache-dir uv
+
+# Install dependencies only (cached layer)
+COPY pyproject.toml /app/
+RUN uv sync --no-install-project --group dev
+
+# Copy source code and install project (in editable mode)
+COPY src /app/src
+RUN uv sync --group dev
+
+# Run the MCP server
+CMD ["uv", "run", "src/mcp_sandbox/resources/mcp_server.py"]

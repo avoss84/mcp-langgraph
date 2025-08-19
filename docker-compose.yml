@@ -1,0 +1,59 @@
+services:
+  mcp-client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    pull_policy: build
+    image: mcp-client:latest
+    platform: linux/amd64
+    ports:
+      - "8081:8080"         # Expose port 8080 of the container on port 8081 of the host
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/root/.config/gcloud/application_default_credentials.json
+      - GOOGLE_CLOUD_PROJECT=neme-ai-rnd-dev-prj-01
+    # env_file:
+    #   - .env        # Load environment variables from .env file
+    depends_on:
+      - mcp-server
+    networks:
+      - ai-network
+    volumes:
+      - /Users/avosseler/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
+
+  mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: mcp-server-1 
+    pull_policy: build
+    image: mcp-server:latest
+    platform: linux/amd64
+    stdin_open: true  # Enable interactive mode for stdio
+    tty: true         # Allocate a pseudo-TTY
+    networks:
+      - ai-network
+    volumes:
+      - /Users/avosseler/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
+
+  chat-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    pull_policy: build
+    image: chat-ui:latest
+    platform: linux/amd64
+    ports:
+      - "5001:8081"         # Expose Streamlit on port 5001 (to avoid conflict with MCP client)
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/root/.config/gcloud/application_default_credentials.json
+      - GOOGLE_CLOUD_PROJECT=neme-ai-rnd-dev-prj-01
+    depends_on:
+      - mcp-client
+    networks:
+      - ai-network
+    volumes:
+      - /Users/avosseler/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
+
+networks:
+  ai-network:
+    driver: bridge

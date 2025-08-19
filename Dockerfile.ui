@@ -1,0 +1,19 @@
+FROM python:3.13-slim
+
+EXPOSE 8081
+WORKDIR /app
+RUN pip install --no-cache-dir uv
+
+# Install dependencies only (cached layer)
+COPY pyproject.toml /app/
+RUN uv sync --no-install-project --group dev
+
+# Copy source code and install project (in editable mode)
+COPY src /app/src
+COPY data /app/data
+COPY .streamlit /app/.streamlit
+COPY chat_ui.py /app/chat_ui.py
+RUN uv sync --group dev
+
+# Run the Streamlit UI
+CMD ["uv", "run", "streamlit", "run", "chat_ui.py", "--server.port=8081", "--server.address=0.0.0.0"]

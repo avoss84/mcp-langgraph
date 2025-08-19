@@ -1,0 +1,73 @@
+{
+    "configurations": [    
+        // {
+        //     "name": "FastAPI - App",
+        //     "type": "debugpy",
+        //     "request": "launch",
+        //     "module": "uvicorn",
+        //     "args": [
+        //         "server.app:app",
+        //         "--reload"
+        //     ],
+        //     "jinja": true
+        // },
+        // {
+        //     "name": "FastAPI - Proxy",
+        //     "type": "debugpy",
+        //     "request": "launch",
+        //     "module": "uvicorn",
+        //     "args": [
+        //         "server.proxy:app",
+        //         "--reload"
+        //     ],
+        //     "jinja": true
+        // },
+        {
+            "name": "FastAPI - App",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/agbe_cc/app.py", // Adjust the path if necessary
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+        "name": "Debug Pytest lang_detect",
+        "type": "debugpy",
+        "request": "launch",
+        "module": "pytest",
+        "args": [
+            "test/test_lang_detect.py"
+        ],
+        "console": "integratedTerminal"
+        },
+        {
+            "name": "Streamlit Debug",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "streamlit",
+            "args": [
+              "run",
+              "${workspaceFolder}/chat_ui.py",
+              "--server.port",
+              "5000"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+    "name": "MCP Server Debug",
+    "type": "debugpy",
+    "request": "launch",
+    "program": "${workspaceFolder}/src/agbe_cc/resources/rag_mcp_server.py",
+    "args": [
+        "--transport", "streamable-http"
+    ],
+    "console": "integratedTerminal"
+    }
+    ]
+}

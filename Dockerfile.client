@@ -1,0 +1,17 @@
+FROM python:3.13-slim
+
+EXPOSE 8080
+WORKDIR /app
+RUN pip install --no-cache-dir uv
+
+# Install dependencies only (cached layer)
+COPY pyproject.toml /app/
+RUN uv sync --no-install-project --group dev
+
+# Copy source code and install project (in editable mode)
+COPY src /app/src
+COPY app_mcp_client.py /app/
+RUN uv sync --group dev
+
+# Run the MCP client
+CMD ["uv", "run", "./app_mcp_client.py"]
