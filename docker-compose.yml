@@ -9,16 +9,14 @@ services:
     ports:
       - "8081:8080"         # Expose port 8080 of the container on port 8081 of the host
     environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/root/.config/gcloud/application_default_credentials.json
-      - GOOGLE_CLOUD_PROJECT=neme-ai-rnd-dev-prj-01
-    # env_file:
-    #   - .env        # Load environment variables from .env file
+      - GOOGLE_APPLICATION_CREDENTIALS=/your_path/application_default_credentials.json
+      - GOOGLE_CLOUD_PROJECT=your_project_gcp_id
     depends_on:
       - mcp-server
     networks:
       - ai-network
     volumes:
-      - /Users/avosseler/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
+      - your_path/application_default_credentials.json
 
   mcp-server:
     build:
@@ -33,7 +31,7 @@ services:
     networks:
       - ai-network
     volumes:
-      - /Users/avosseler/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
+      - your_path/application_default_credentials.json
 
   chat-ui:
     build:
@@ -45,14 +43,14 @@ services:
     ports:
       - "5001:8081"         # Expose Streamlit on port 5001 (to avoid conflict with MCP client)
     environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/root/.config/gcloud/application_default_credentials.json
-      - GOOGLE_CLOUD_PROJECT=neme-ai-rnd-dev-prj-01
+      - GOOGLE_APPLICATION_CREDENTIALS=/your_path/application_default_credentials.json
+      - GOOGLE_CLOUD_PROJECT=your_project_gcp_id
     depends_on:
       - mcp-client
     networks:
       - ai-network
     volumes:
-      - /Users/avosseler/.config/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json
+      - your_path/.config/gcloud/application_default_credentials.json
 
 networks:
   ai-network:
