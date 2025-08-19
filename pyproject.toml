@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mcp-playground"
 version = "0.1.0"
-description = "Basic data science project template"
+description = "Basic example of a MCP LangGraph application with FastAPI and Streamlit"
 readme = "README.md"
 requires-python = "==3.13.*"
 dependencies = [
@@ -30,10 +30,6 @@ dependencies = [
 ]
 
 keywords = ["Data Science", "Project template"]
-
-authors = [
-    { name = "Alexander Vosseler", email = "avosseler@nemetschek.com" }
-]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
